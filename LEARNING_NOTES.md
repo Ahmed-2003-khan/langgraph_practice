@@ -80,7 +80,52 @@
 - Enables building complex AI agents with multiple processing steps
 - State management ensures data flows correctly through AI components
 
+---
+
+## 3. Prompt Chaining - Multi-Step LLM Workflows
+
+### What I Learned:
+
+#### 3.1 **Prompt Chaining Pattern**
+- **Prompt chaining** = Using the output of one LLM call as input for the next
+- Creates more sophisticated AI workflows than single-shot prompting
+- Each step builds upon the previous step's output
+- Enables complex content generation tasks
+
+#### 3.2 **Blog Generation Workflow**
+- Created a two-step blog writing system:
+  1. `create_outline`: Generates a structured outline from a title
+  2. `create_blog`: Writes full blog content based on the outline
+- Workflow: `START → create_outline → create_blog → END`
+- State structure (`BlogState`):
+  - `title`: User's input topic
+  - `outline`: LLM-generated outline
+  - `content`: Final blog post
+
+#### 3.3 **Benefits of Prompt Chaining**
+- **Better quality**: Breaking tasks into steps produces better results
+- **Transparency**: Can inspect intermediate outputs (outline before content)
+- **Control**: Can modify/validate outputs between steps
+- **Reusability**: Individual nodes can be reused in different workflows
+
+#### 3.4 **State Accumulation Pattern**
+- State progressively builds up through the workflow:
+  - Start: Only `title`
+  - After step 1: `title` + `outline`
+  - After step 2: `title` + `outline` + `content`
+- Each node reads what it needs and adds new fields
+- Final state contains complete processing history
+
+#### 3.5 **Real-World Applications**
+- Content generation (blogs, articles, reports)
+- Research assistance (outline → detailed analysis)
+- Code generation (spec → pseudocode → actual code)
+- Creative writing (plot → chapters → full story)
+- Any multi-step reasoning task
+
 ### Key Takeaways:
 1. **BMI Workflow**: LangGraph workflows are composable - you can break down complex logic into smaller, focused node functions and connect them in a graph structure.
 
 2. **LLM Workflow**: LangGraph bridges the gap between traditional programming and AI - you can combine deterministic workflows with powerful language models to build intelligent applications.
+
+3. **Prompt Chaining**: Breaking complex AI tasks into sequential steps produces higher quality results and provides better control over the generation process. LangGraph's state management makes prompt chaining natural and elegant.
