@@ -174,3 +174,37 @@
 
 ### Key Takeaway:
 This workflow demonstrates LangGraph's power for parallel processing - when calculations don't depend on each other, they can run simultaneously, with a final aggregation step. This is a significant advantage over sequential workflows.
+
+---
+
+## 5. UPSC Essay Evaluation - Structured Outputs (Work in Progress)
+
+### What I've Implemented:
+
+#### 5.1 **Structured Output with Pydantic**
+- Using **Pydantic BaseModel** to define output schema
+- `EvaluationSchema` with two fields:
+  - `feedback`: Detailed string feedback
+  - `score`: Integer between 0-10 (validated with `ge=0, le=10`)
+- LLM returns structured data instead of raw text
+
+#### 5.2 **with_structured_output() Method**
+- Key LangChain feature for type-safe LLM responses
+- `model.with_structured_output(EvaluationSchema)`
+- Ensures LLM output matches the defined schema
+- Automatic validation and type checking
+
+#### 5.3 **Essay Evaluation Use Case**
+- Evaluates language quality of essays
+- Provides detailed feedback
+- Assigns numerical score
+- Useful for UPSC exam preparation
+
+### Planned Features:
+- Build complete LangGraph workflow
+- Add multiple evaluation criteria (content, structure, coherence)
+- Implement multi-step evaluation process
+- Add improvement suggestions generation
+
+### Key Learning:
+Structured outputs solve a major problem with LLMs - unpredictable response formats. By using Pydantic schemas, we get type-safe, validated responses that are easy to work with programmatically.
