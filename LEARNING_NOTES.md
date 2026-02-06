@@ -132,19 +132,32 @@
 
 ---
 
-## 4. Batsman Statistics Workflow (Work in Progress)
+## 4. Batsman Statistics Workflow (In Development)
 
-### Planned Features:
+### What I've Implemented:
 
 #### 4.1 **Cricket Statistics Calculator**
 - State structure (`BatsmanState`):
   - Input fields: `runs`, `balls`, `fours`, `sixes`
   - Calculated fields: `sr` (strike rate), `bpb` (balls per boundary), `boundary_percent`
-- Will demonstrate multiple calculation nodes working with sports statistics
+  - Output field: `summary` (formatted statistics summary)
 
-#### 4.2 **Planned Node Functions**
-- Calculate strike rate: (runs / balls) × 100
-- Calculate balls per boundary: balls / (fours + sixes)
-- Calculate boundary percentage: (boundary runs / total runs) × 100
+#### 4.2 **Implemented Node Functions**
+- **`calculate_sr`**: Calculates strike rate = (runs / balls) × 100
+- **`calculate_bpb`**: Calculates balls per boundary = balls / (fours + sixes)
+- **`calculate_boundary_percent`**: Calculates boundary % = (boundary runs / total runs) × 100
+- **`summary`**: Generates formatted summary of all statistics
 
-*Note: This workflow is currently under development.*
+#### 4.3 **Multi-Node Calculation Pattern**
+- Demonstrates parallel independent calculations
+- Each calculation node focuses on one metric
+- Final summary node aggregates all results
+- Shows how to structure workflows with multiple calculation steps
+
+### Still To Do:
+- Add edges to connect nodes
+- Compile the workflow
+- Test with sample batsman data
+- Add workflow visualization
+
+*Note: This workflow demonstrates applying LangGraph to sports analytics and multi-step calculations.*
