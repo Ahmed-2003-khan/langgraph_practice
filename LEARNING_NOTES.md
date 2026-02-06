@@ -129,3 +129,22 @@
 2. **LLM Workflow**: LangGraph bridges the gap between traditional programming and AI - you can combine deterministic workflows with powerful language models to build intelligent applications.
 
 3. **Prompt Chaining**: Breaking complex AI tasks into sequential steps produces higher quality results and provides better control over the generation process. LangGraph's state management makes prompt chaining natural and elegant.
+
+---
+
+## 4. Batsman Statistics Workflow (Work in Progress)
+
+### Planned Features:
+
+#### 4.1 **Cricket Statistics Calculator**
+- State structure (`BatsmanState`):
+  - Input fields: `runs`, `balls`, `fours`, `sixes`
+  - Calculated fields: `sr` (strike rate), `bpb` (balls per boundary), `boundary_percent`
+- Will demonstrate multiple calculation nodes working with sports statistics
+
+#### 4.2 **Planned Node Functions**
+- Calculate strike rate: (runs / balls) × 100
+- Calculate balls per boundary: balls / (fours + sixes)
+- Calculate boundary percentage: (boundary runs / total runs) × 100
+
+*Note: This workflow is currently under development.*
