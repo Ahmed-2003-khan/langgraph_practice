@@ -132,9 +132,9 @@
 
 ---
 
-## 4. Batsman Statistics Workflow (In Development)
+## 4. Batsman Statistics Workflow - Parallel Node Execution ✅
 
-### What I've Implemented:
+### What I Learned:
 
 #### 4.1 **Cricket Statistics Calculator**
 - State structure (`BatsmanState`):
@@ -148,16 +148,29 @@
 - **`calculate_boundary_percent`**: Calculates boundary % = (boundary runs / total runs) × 100
 - **`summary`**: Generates formatted summary of all statistics
 
-#### 4.3 **Multi-Node Calculation Pattern**
-- Demonstrates parallel independent calculations
-- Each calculation node focuses on one metric
-- Final summary node aggregates all results
-- Shows how to structure workflows with multiple calculation steps
+#### 4.3 **Parallel Node Execution Pattern** 🌟
+- **Key Innovation**: Multiple nodes execute simultaneously from START
+- Workflow structure:
+  ```
+  START → calculate_sr ────┐
+  START → calculate_bpb ────┤→ summary → END
+  START → calculate_boundary_percent ─┘
+  ```
+- All three calculation nodes run in parallel (no dependencies between them)
+- Summary node waits for all three calculations to complete
+- Demonstrates LangGraph's ability to handle concurrent operations
 
-### Still To Do:
-- Add edges to connect nodes
-- Compile the workflow
-- Test with sample batsman data
-- Add workflow visualization
+#### 4.4 **Return Dictionary Pattern**
+- Node functions return dictionaries instead of modifying state directly
+- Example: `return {'sr': sr}` instead of `state['sr'] = sr; return state`
+- LangGraph automatically merges returned dictionaries into state
+- Cleaner, more functional programming style
 
-*Note: This workflow demonstrates applying LangGraph to sports analytics and multi-step calculations.*
+#### 4.5 **Real-World Insights**
+- Parallel execution improves performance for independent calculations
+- Sports analytics often involves multiple independent metrics
+- Pattern applicable to any scenario with parallel data processing needs
+- Examples: financial analysis, sensor data processing, multi-metric dashboards
+
+### Key Takeaway:
+This workflow demonstrates LangGraph's power for parallel processing - when calculations don't depend on each other, they can run simultaneously, with a final aggregation step. This is a significant advantage over sequential workflows.
