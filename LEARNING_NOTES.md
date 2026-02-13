@@ -304,3 +304,85 @@ START → find_sentiment → check_sentiment (router)
 
 ### Key Takeaway:
 Conditional edges enable **decision-making workflows** that adapt based on data. This pattern is essential for building intelligent systems that respond differently to different inputs - the foundation of real AI applications.
+
+---
+
+## 7. Tweet Generator - Loops & Iterative Refinement ✅
+
+### What I Learned:
+
+#### 7.1 **Loops/Cycles in LangGraph** 🌟
+- **Self-improving workflows** with feedback loops
+- Nodes can route back to previous nodes
+- Creates iterative refinement cycles
+- Essential for quality improvement systems
+- Prevents infinite loops with iteration limits
+
+#### 7.2 **Workflow Structure with Loop**
+```
+START → generate → evaluate → route_evaluation
+                       ↑              ↓
+                       |         (approved) → END
+                       |              ↓
+                       └─── optimize (needs_improvement)
+```
+- Generate creates initial tweet
+- Evaluate assesses quality
+- Router decides: approve or improve
+- Optimize refines based on feedback
+- Loop continues until approved or max iterations
+
+#### 7.3 **Iteration Control Pattern**
+```python
+class TweetState(TypedDict):
+    iteration: int
+    max_iteration: int
+    # ... other fields
+
+def route_evaluation(state):
+    if state['evaluation'] == 'approved' or state['iteration'] >= state['max_iteration']:
+        return 'approved'
+    else:
+        return 'needs_improvement'
+```
+- Tracks current iteration count
+- Sets maximum iteration limit
+- Prevents infinite loops
+- Ensures workflow completion
+
+#### 7.4 **History Tracking with Annotated Lists**
+```python
+tweet_history: Annotated[list[str], operator.add]
+feedback_history: Annotated[list[str], operator.add]
+```
+- Automatically aggregates all tweets generated
+- Stores all feedback received
+- Provides complete audit trail
+- Useful for analysis and debugging
+
+#### 7.5 **Multi-Model Architecture**
+- `generator_llm`: Creates tweets
+- `evaluator_llm`: Assesses quality (structured output)
+- `optimizer_llm`: Refines based on feedback
+- Different models for different tasks
+- Specialized prompts for each role
+
+#### 7.6 **Structured Evaluation Schema**
+```python
+class TweetEvaluation(BaseModel):
+    evaluation: Literal["approved", "needs_improvement"]
+    feedback: str
+```
+- Binary decision with detailed feedback
+- Type-safe routing decisions
+- Combines structured and unstructured data
+
+### Real-World Application:
+- Content generation systems
+- Quality assurance workflows
+- Automated content refinement
+- A/B testing automation
+- Creative writing assistance
+
+### Key Takeaway:
+Loops enable **iterative improvement** - the workflow keeps refining until quality standards are met or iteration limits reached. This pattern is fundamental for building AI systems that produce high-quality outputs through self-refinement.
