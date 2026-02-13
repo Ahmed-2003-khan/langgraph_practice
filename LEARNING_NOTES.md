@@ -240,3 +240,67 @@ This workflow combines THREE advanced LangGraph patterns:
 3. **Annotated state** (automatic aggregation with operator.add)
 
 This is a production-grade pattern for building sophisticated AI evaluation systems.
+
+---
+
+## 6. Review Reply Workflow - Conditional Edges ✅
+
+### What I Learned:
+
+#### 6.1 **Conditional Edges** 🌟
+- **Branching logic** in LangGraph workflows
+- `add_conditional_edges()` method
+- Router function returns next node name
+- Different paths based on state values
+- Essential for decision-making workflows
+
+#### 6.2 **Router Function Pattern**
+```python
+def check_sentiment(state) -> Literal['positive_response', 'diagnose_issue']:
+    if state['sentiment'] == 'positive':
+        return 'positive_response'
+    else:
+        return 'diagnose_issue'
+```
+- Returns node name as string
+- Type hints with `Literal` for clarity
+- Reads state to make decision
+- Directs workflow to appropriate path
+
+#### 6.3 **Multiple Structured Outputs**
+- Two different Pydantic schemas:
+  - `SentimentSchema`: sentiment classification
+  - `DiagnosisSchema`: issue_type, tone, urgency
+- Different models for different tasks
+- Demonstrates schema versatility
+
+#### 6.4 **Workflow Structure**
+```
+START → find_sentiment → check_sentiment (router)
+                              ↓
+                    ┌─────────┴──────────┐
+                    ↓                    ↓
+            positive_response    diagnose_issue → negative_response
+                    ↓                              ↓
+                    └──────────→ END ←────────────┘
+```
+
+#### 6.5 **Use Case: Customer Support Automation**
+- Analyzes customer review sentiment
+- Routes to appropriate response path
+- Positive reviews: Simple thank you
+- Negative reviews: 
+  - Diagnoses issue (UX/Performance/Bug/Support)
+  - Assesses tone (angry/frustrated/disappointed)
+  - Determines urgency (low/medium/high)
+  - Generates contextual support response
+
+### Real-World Application:
+- Automated customer support systems
+- Review management platforms
+- Sentiment-based routing
+- Personalized response generation
+- Scalable support workflows
+
+### Key Takeaway:
+Conditional edges enable **decision-making workflows** that adapt based on data. This pattern is essential for building intelligent systems that respond differently to different inputs - the foundation of real AI applications.
